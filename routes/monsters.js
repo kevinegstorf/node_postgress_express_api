@@ -55,6 +55,16 @@ router.put('/:id', (request, response, next) => {
         }
       )
     });
-  });
+});
 
-  module.exports = router;
+router.delete('/:id', (request, response, next) => {
+    const { id } = request.params;
+
+    pool.query('DELETE FROM monsters WHERE id=($1)', [id], (err, res) => {
+        if (err) return next(err);
+
+        response.redirect('/monsters');
+    });
+});
+
+module.exports = router;
